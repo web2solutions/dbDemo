@@ -1,0 +1,47 @@
+﻿<!DOCTYPE HTML>
+<html lang="pt-br" manifest="cache.appcache">
+    <head>
+        <meta charset="UTF-8">
+        <title>dbDemo</title>
+		<script type="text/javascript" src="../dhx/dhx.js"></script>
+        <script type="text/javascript" src="../dhx/pubsub.js"></script>
+        <script type="text/javascript" >
+			window.onload = function() {
+				var cdn_application_path = window.location.protocol + '//' + window.location.host + '/dbDemo/';
+				
+				if( cdn_application_path.indexOf('web2.eti.br') != -1 )
+					$dhx.environment = "test";
+				else
+				{
+					cdn_application_path = '//cdn.dhtmlx.com.br/dbDemo/'
+					$dhx.environment = "production";
+				}
+				
+				$dhx.onDemand.load([cdn_application_path + "lib/controller/dbDemo.js"], function()
+				{	
+					var settings = {
+						fnCallBack: function() {}
+					};	
+					if( cdn_application_path.indexOf('web2.eti.br') != -1 )
+						settings['base_path'] = "http://mac.web2.eti.br/";
+					else
+						settings['base_path'] = 'http://cdn.dhtmlx.com.br/';
+
+					dbDemo.start( settings );
+					
+					//$dhx.notify('dbDemo', 'hhhhhhhhhhhhhh');
+      
+      				//window.navigator.vibrate(500);
+				});
+			}
+			window.onerror = function(msg, url, line, column, errorObj)
+			{
+				dhtmlx.message( {type : "error", text : msg + ' ' + line + ' ' + column} );
+				dhtmlx.message( {type : "error", text : line} );
+				console.log( errorObj );
+			}
+         </script>
+     </head>
+    <body>
+    </body>
+</html>
